@@ -1,8 +1,8 @@
-import { ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
+import { ValidatorFn, AsyncValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 
 export class UserNamevalidators {
 
-    static cannotContainSpace(control: AbstractControl) {
+    static cannotContainSpace(control: AbstractControl): ValidationErrors | null {
 
 
         if ((control.value as string).indexOf(' ') > 0) {
@@ -16,6 +16,31 @@ export class UserNamevalidators {
 
 
     }
+
+    static UniqueUserName(control: AbstractControl)
+        : Promise<ValidationErrors | null> {
+
+        return new Promise((resolve, reject) => {
+
+            setTimeout(() => {
+
+                if (control.value === 'mosh') {
+
+                    resolve({ unique: true });
+
+                }
+                else {
+                    resolve(null);
+
+                }
+
+            }, 2000)
+
+        });
+
+    }
+
+
 
 
 }

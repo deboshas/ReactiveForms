@@ -12,23 +12,32 @@ export class SignUpComponent implements OnInit {
 
   constructor() {
     this.form = new FormGroup({
-      'username': new FormControl('', [Validators.required, Validators.minLength(3), UserNamevalidators.cannotContainSpace]),
-      'password': new FormControl('', [Validators.required, Validators.minLength(8)]),
-
+      account: new FormGroup({
+        'username': new FormControl('', [Validators.required, Validators.minLength(3), UserNamevalidators.cannotContainSpace, UserNamevalidators.UniqueUserName]),
+        'password': new FormControl('', [Validators.required, Validators.minLength(8)]),
+      })
     });
   }
 
   get username() {
 
-    return this.form.get('username');
+    return this.form.get('account.username');
   }
 
 
   get password() {
 
-    return this.form.get('password');
+    return this.form.get('account.password');
   }
   ngOnInit() {
+  }
+
+  login() {
+
+    console.log(this.form.value);
+    this.form.setErrors({
+      invalidLogin: true
+    })
   }
 
 }
